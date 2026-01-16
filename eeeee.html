@@ -1,0 +1,1704 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог | POP! Shop</title>
+    <!-- Твой файл стилей -->
+    <link rel="stylesheet" href="pop.style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Логика фильтрации */
+        .hidden-card {
+            display: none !important;
+        }
+        
+        /* Анимация появления */
+        .product-card {
+            transition: all 0.3s ease;
+        }
+        
+        .animate-show {
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Кнопки фильтров (можно стилизовать под себя) */
+        .filter-btn {
+            cursor: pointer;
+            padding: 8px 20px;
+            border-radius: 99px;
+            border: 1px solid #4b5563;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .filter-btn.active {
+            background-color: #2563eb;
+            color: white;
+            border-color: #2563eb;
+        }
+
+        /* Сетка для карточек */
+        #product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    /* СВІТЛА ТЕМА (DEFAULT) - Основні стилі */
+    color: #1a1a1a;
+    background-color: #f7f7f7;
+    transition: color 0.5s, background-color 0.5s;
+    /* Додано transition для body */
+}
+
+/* ТЕМНА ТЕМА */
+body.dark-theme {
+    color: #e0e0e0;
+    background-color: #121212;
+}
+
+/* --- HEADER LAYOUT --- */
+
+.header-container {
+    width: 100%;
+    /* Світла тема (Default) */
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: background 0.5s, box-shadow 0.5s;
+}
+
+/* Стилі контейнера хедера для темної теми */
+body.dark-theme .header-container {
+    background: rgba(0, 0, 0, 0.9);
+    box-shadow: 0 8px 32px 0 rgba(255, 71, 87, 1);
+    /* НЕОН ТІНЬ */
+}
+
+header {
+    padding: 5px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 90px;
+    box-sizing: border-box;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.headertext {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    z-index: 1001;
+}
+
+.logocontainer img {
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.logocontainer:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+}
+
+.nav-center,
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* --- ТИТУЛ --- */
+.title h1 {
+    font-size: 1.5rem;
+    white-space: nowrap;
+    margin: 0;
+    transition: all 0.3s ease;
+    /* Світла тема (Default) */
+    color: #667eea;
+    text-shadow: none;
+}
+
+.title h1:hover {
+    transform: scale(1.05);
+    /* Світла тема (Default) */
+    color: #764ba2;
+}
+
+/* Титул (Темна тема) */
+body.dark-theme .title h1 {
+    color: #ff4757;
+    text-shadow: 0 0 6px #ff4757, 0 0 20px #ff4757, 0 0 30px #ff4757;
+}
+
+body.dark-theme .title h1:hover {
+    color: #ff6b7a;
+    text-shadow: 0 0 6px #ff6b7a, 0 0 20px #ff6b7a, 0 0 30px #ff6b7a;
+}
+
+/* --- ПОСИЛАННЯ (NAV LINKS) --- */
+.nav-link {
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 18px;
+    padding: 5px 10px;
+    transition: all 0.3s ease;
+    /* Світла тема (Default) */
+    color: #667eea;
+    text-shadow: none;
+}
+
+.nav-link:hover {
+    /* Світла тема (Default) */
+    color: #764ba2;
+    transform: scale(1.05);
+}
+
+/* Посилання (Темна тема) */
+body.dark-theme .nav-link {
+    color: #ff4757;
+    text-shadow: 0 0 6px #ff4757, 0 0 20px #ff4757, 0 0 30px #ff4757;
+}
+
+body.dark-theme .nav-link:hover {
+    color: #ff6b7a;
+    text-shadow: 0 0 6px #ff6b7a, 0 0 20px #ff6b7a, 0 0 30px #ff6b7a;
+}
+
+/* --- ПОШУКОВА СИСТЕМА --- */
+.form {
+    width: 200px;
+    height: 40px;
+    /* Стилі за замовчуванням (Світла Тема) */
+    background: #fff;
+    border: 1px solid #ddd;
+    position: relative;
+    border-radius: 4px;
+    transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+
+/* Стилі пошукового блоку для Темної теми */
+body.dark-theme .form {
+    background: #1a1a1a;
+    border-color: #333;
+}
+
+.form label {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 40px;
+}
+
+/* Стилі поля вводу */
+.form input {
+    width: 100%;
+    padding-inline-start: 10px;
+    padding-inline-end: 45px;
+    outline: none;
+    border: 0;
+    background: transparent;
+    /* Колір тексту для Світлої теми (Default) */
+    color: #111;
+}
+
+/* Колір тексту для Темної теми */
+body.dark-theme .form input {
+    color: #fff;
+}
+
+body.dark-theme .form input::placeholder {
+    color: #aaa;
+}
+
+.form input::placeholder {
+    /* Колір placeholder для Світлої теми (Default) */
+    color: #777;
+}
+
+
+.form svg {
+    transition: 0.3s;
+    position: absolute;
+    height: 18px;
+    width: 18px;
+}
+
+/* --- КОЛЬОРИ ЛУПИ --- */
+
+/* Світла тема: Дефолт - Чорна */
+.form svg {
+    color: #000000;
+}
+
+/* Темна тема: Дефолт - Колір Бордера (#333) */
+body.dark-theme .form svg {
+    color: #333;
+}
+
+.icon {
+    position: absolute;
+    right: 35px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: color 0.3s;
+}
+
+/* Зміна кольору лупи при фокусі */
+
+/* Світла тема: При фокусі - Фіолетова (#667eea) (Default) */
+.form input:focus~.icon svg {
+    color: #667eea;
+}
+
+/* Темна тема: При фокусі - Помаранчева (#ff4757) */
+body.dark-theme .form input:focus~.icon svg {
+    color: #ff4757;
+}
+
+.swap-on {
+    opacity: 1;
+}
+
+.swap-off {
+    display: none;
+}
+
+
+/* Кнопка закриття (хрестик) */
+.close-btn {
+    background: none;
+    border: none;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #111;
+    /* Світла тема: чорний хрестик (Default) */
+    padding: 0.1em;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    transition: 0.3s;
+    opacity: 0;
+    visibility: hidden;
+    cursor: pointer;
+    position: absolute;
+    z-index: 10;
+}
+
+/* Темна тема: білий хрестик */
+body.dark-theme .close-btn {
+    color: #fff;
+}
+
+.form input:valid~.close-btn {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(-50%) scale(1);
+}
+
+/* Ховер кнопки закриття */
+.close-btn:hover {
+    background-color: #eee;
+}
+
+/* Світла тема: ховер (Default) */
+body.dark-theme .close-btn:hover {
+    background-color: #333;
+}
+
+/* Темна тема: ховер */
+
+
+/* --- ПЕРЕМИКАЧ ТЕМИ (SVG STARS/SUN) --- */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    z-index: 0;
+    overflow: hidden;
+    /* Світла тема - фон дня (Default) */
+    background-color: #89cff0;
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+/* Фон слайдера (Ніч) */
+input:checked+.slider {
+    background-color: #1a1a1a;
+}
+
+/* Сонце/Місяць (Куля) */
+.sun-moon {
+    position: absolute;
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: yellow;
+    transition: 0.4s;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 10px rgba(255, 255, 0, 0.8);
+    /* НЕОН ТІНЬ (Сонце) */
+}
+
+/* Рух Місяця (Ніч) */
+input:checked+.slider .sun-moon {
+    background-color: #ff4757;
+    box-shadow: none;
+    transform: translateX(26px);
+}
+
+/* SVG Елементи */
+.light-ray,
+.moon-dot,
+.star,
+.cloud-light,
+.cloud-dark {
+    position: absolute;
+    transition: opacity 0.4s, transform 0.4s, fill 0.4s;
+}
+
+/* Промені (День) */
+.light-ray {
+    fill: yellow;
+    opacity: 1;
+    width: 20px;
+    height: 20px;
+    top: 3px;
+    left: 3px;
+}
+
+input:checked+.slider .sun-moon .light-ray {
+    opacity: 0;
+}
+
+/* Плями (Ніч) */
+.moon-dot {
+    fill: #a8303a;
+    opacity: 0;
+    width: 5px;
+    height: 5px;
+}
+
+input:checked+.slider .sun-moon .moon-dot {
+    opacity: 1;
+}
+
+#moon-dot-1 {
+    left: 4px;
+    top: 4px;
+}
+
+#moon-dot-2 {
+    right: 4px;
+    bottom: 4px;
+}
+
+#moon-dot-3 {
+    top: 30%;
+    left: 30%;
+}
+
+/* Зірки (Ніч) */
+.stars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.star {
+    fill: #ff4757;
+    opacity: 0;
+}
+
+input:checked+.slider .star {
+    opacity: 1;
+}
+
+#star-1 {
+    top: 5px;
+    right: 10px;
+    width: 4px;
+    height: 4px;
+}
+
+#star-2 {
+    top: 15px;
+    right: 25px;
+    width: 3px;
+    height: 3px;
+}
+
+#star-3 {
+    bottom: 8px;
+    left: 15px;
+    width: 5px;
+    height: 5px;
+}
+
+#star-4 {
+    bottom: 18px;
+    left: 30px;
+    width: 2px;
+    height: 2px;
+}
+
+/* Хмари (День) */
+.cloud-light {
+    fill: white;
+    opacity: 1;
+    width: 15px;
+    height: 15px;
+}
+
+input:checked+.slider .sun-moon .cloud-light {
+    opacity: 0;
+}
+
+#cloud-4 {
+    top: 1px;
+    left: 1px;
+}
+
+#cloud-5 {
+    top: 1px;
+    right: 1px;
+}
+
+#cloud-6 {
+    bottom: 1px;
+    left: 8px;
+}
+
+.cloud-dark {
+    display: none;
+}
+
+/* --- ГАМБУРГЕР КНОПКА --- */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 24px;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 2000;
+}
+
+.menu-toggle span {
+    display: block;
+    width: 100%;
+    height: 3px;
+    border-radius: 2px;
+    transition: 0.3s;
+}
+
+/* Світла тема (Default) */
+.menu-toggle span {
+    background-color: #667eea;
+}
+
+/* Темна тема */
+body.dark-theme .menu-toggle span {
+    background-color: #ff4757;
+}
+
+.menu-toggle.open span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 6px);
+}
+
+.menu-toggle.open span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle.open span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -6px);
+}
+
+/* --- СЛАЙД МЕНЮ (SIDEBAR) --- */
+.mobile-sidebar {
+    position: fixed;
+    top: 0;
+    right: -340px;
+    width: 300px;
+    height: 100vh;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.8);
+    z-index: 1500;
+    padding: 100px 20px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.5s;
+    overflow-y: auto;
+    /* Світла тема (Default) */
+    background-color: #ffffff;
+}
+
+body.dark-theme .mobile-sidebar {
+    background-color: #000000;
+}
+
+/* === ЛІНІЯ РОЗДІЛЬНИК В МЕНЮ === */
+.mobile-sidebar .nav-link {
+    font-size: 22px;
+    display: block;
+    width: 100%;
+    padding-bottom: 10px;
+    /* Лінія для Світлої Теми (чорна напівпрозора) (Default) */
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Лінія для Темної Теми (біла напівпрозора) */
+body.dark-theme .mobile-sidebar .nav-link {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* =========================================== */
+.mobile-sidebar.active {
+    right: 0;
+}
+
+/* Фікс стилів пошуку в мобільному меню */
+.mobile-sidebar .form {
+    width: 100%;
+}
+
+.mobile-sidebar .form input {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.mobile-sidebar .header-right-clone {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.product-grid {
+    padding: 20px;
+    display: grid;
+    /* Створює адаптивну сітку: автоматично розміщує картки, 
+       кожна займає мінімум 280px, а простір ділиться рівномірно (1fr) */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px; /* Відстань між картками */
+    max-width: 1200px; /* Обмеження ширини для центрування */
+    margin: 20px auto; /* Центрування контейнера */
+}
+
+.product-card {
+    display: flex;
+    flex-direction: column;
+    /* Світла тема (Default) */
+    background-color: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    border: 1px solid #ddd;
+    transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s, border-color 0.3s;
+    scroll-snap-align: start;
+    flex: 0 0 100%;
+}
+
+@media (min-width: 768px) {
+    .product-card {
+        flex: 0 0 20%;
+    }
+}
+
+.product-card:hover {
+    /* Світла тема (Default) */
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+    /* Светлый акцент при наведении */
+}
+
+/* Темна тема для картки */
+body.dark-theme .product-card {
+    background-color: #1e1e1e;
+    /* Темный фон для карточки */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    border: 1px solid #333;
+}
+
+body.dark-theme .product-card:hover {
+    box-shadow: 0 8px 25px rgba(255, 71, 87, 0.3);
+    /* Легкий неоновый эффект при наведении */
+}
+
+.card-header {
+    padding: 15px;
+    padding-bottom: 10px;
+    /* Світла тема (Default) */
+    border-bottom: 1px solid #eee;
+}
+
+/* Темна тема для заголовка картки */
+body.dark-theme .card-header {
+    border-bottom: 1px solid #333;
+}
+
+.title-and-franchise {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+/* Налаштування розміщення заголовка та підзаголовка */
+.product-title {
+    font-size: 1.2rem;
+    margin: 0;
+    font-weight: 600;
+    /* Світла тема (Default) */
+    color: #667eea;
+}
+
+/* Темна тема для заголовка */
+body.dark-theme .product-title {
+    color: #ff4757;
+    text-shadow: 0 0 6px #ff4757, 0 0 20px #ff4757, 0 0 30px #ff4757;
+}
+
+/* НОВИЙ СТИЛЬ: Підзаголовок (h4) */
+.card-header h4 {
+    font-size: 0.85rem;
+    margin: 3px 0 0 0;
+    /* Невеликий відступ від заголовка */
+    font-weight: 400;
+    /* Світла тема (Default) */
+    color: #a0a0a0;
+}
+
+/* Темна тема для підзаголовка (h4) */
+body.dark-theme .card-header h4 {
+    color: #666666;
+}
+
+/* Кінець НОВОГО СТИЛЮ */
+
+.product-franchise {
+    width: 50px;
+    height: 20px;
+}
+
+.product-franchise img {
+    width: 50px;
+    height: 20px;
+}
+
+.card-image-container {
+    overflow: hidden;
+    height: 250px;
+    /* Фиксированная высота для контейнера изображения */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+}
+
+.product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    /* Убедимся, что изображение помещается, сохраняя пропорции */
+    padding: 10px;
+    box-sizing: border-box;
+    transition: transform 0.5s;
+}
+
+.product-card:hover .product-image {
+    transform: scale(1.05);
+}
+
+.card-caption {
+    padding: 15px;
+    flex-grow: 1;
+    /* Описание может растягиваться */
+    /* Світла тема (Default) */
+    border-top: 1px solid #eee;
+}
+
+/* Темна тема для опису */
+body.dark-theme .card-caption {
+    border-top: 1px solid #333;
+}
+
+/* Стилі тексту опису */
+.product-description {
+    font-size: 0.9rem;
+    /* Світла тема (Default) */
+    color: #000000;
+}
+
+body.dark-theme .product-description {
+    color: #ffffff;
+}
+
+.card-actions {
+    padding: 15px;
+    /* Світла тема (Default) */
+    border-top: 1px solid #eee;
+}
+
+/* Темна тема для екшенів */
+body.dark-theme .card-actions {
+    border-top: 1px solid #333;
+}
+
+.price-and-cart {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* --- КНОПКИ --- */
+
+.price-button {
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s;
+    border-radius: 5px;
+    padding: 8px 16px;
+    /* Додав padding для коректного відображення */
+    /* Світла тема (Default) */
+    background: linear-gradient(145deg, #667eea, #764ba2);
+    /* Градиент */
+    color: #ffffff;
+    box-shadow: 0 4px 15px #667eea;
+}
+
+.price-button:hover {
+    /* Світла тема (Default) */
+    box-shadow: 0 6px 20px #667eea;
+    transform: translateY(-1px);
+}
+
+/* Темна тема для кнопки ціни */
+body.dark-theme .price-button {
+    background: linear-gradient(145deg, #ff4757, #ff6b7a);
+    /* Градиент */
+    box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4);
+}
+
+body.dark-theme .price-button:hover {
+    box-shadow: 0 6px 20px rgba(255, 71, 87, 0.6);
+}
+
+/* КНОПКА КОРЗИНЫ */
+.cart-button {
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    padding: 12px;
+    /* Додав padding для коректного відображення */
+    /* Світла тема (Default) */
+    background-color: #f0f0f0;
+    border-color: #ccc;
+    color: #667eea;
+    /* Светлый акцент */
+}
+
+.cart-button:hover {
+    /* Світла тема (Default) */
+    background-color: #e0e0e0;
+    box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+}
+
+/* Темна тема для кнопки кошика */
+body.dark-theme .cart-button {
+    background-color: #2e2e2e;
+    border-color: #3d3d3d;
+    color: #ff4757;
+    /* Неоновый значок */
+}
+
+body.dark-theme .cart-button:hover {
+    background-color: #3d3d3d;
+    box-shadow: 0 0 10px rgba(255, 71, 87, 0.5);
+}
+
+.cart-button svg {
+    width: 24px;
+    height: 24px;
+}
+
+@media (max-width: 1200px) {
+    .product-card {
+        flex: 0 0 25%;
+    }
+}
+
+@media (max-width: 1000px) {
+    .nav-center {
+        display: none;
+    }
+
+    .menu-toggle {
+        display: flex;
+    }
+
+    .product-card {
+        flex: 0 0 35%
+    }
+}
+
+@media (max-width: 768px) {
+
+    /* На мобільних хедер на всю ширину */
+    .header-container {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    header {
+        max-width: 100%;
+        padding: 5px 20px;
+    }
+
+    .mobile-sidebar {
+        width: 268px;
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.6)
+    }
+
+    .carousel-section h2 {
+        font-size: 1.5rem;
+    }
+
+    .carousel-section img {
+        width: 400px;
+        height: 400px;
+    }
+
+    .carousel-section {
+        flex-direction: column;
+        text-align: center;
+        padding: 40px 20px;
+        height: auto;
+    }
+
+    .carousel-section h2 {
+        padding-right: 0;
+        margin-bottom: 20px;
+    }
+
+    .carousel-section h2 {
+        font-size: 1.8rem;
+        text-align: center;
+    }
+
+    .carousel-section img {
+        max-height: 250px;
+    }
+
+    .product-card {
+        flex: 0 0 50%
+    }
+}
+
+@media (max-width: 700px) {
+    .header-right {
+        display: none;
+    }
+
+    .logocontainer img {
+        height: 50px;
+        width: 50px;
+    }
+
+    .title h1 {
+        font-size: 1.2rem;
+    }
+
+    .mobile-sidebar {
+        width: 200px;
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.4)
+    }
+
+    .carousel-section h2 {
+        font-size: 1.2rem;
+    }
+
+    .carousel-section img {
+        width: 250px;
+        height: 250px;
+    }
+
+    .product-card {
+        flex: 0 0 75%
+    }
+}
+
+@media (max-width: 600px) {
+    .product-grid {
+        /* На очень маленьких экранах одна колонка */
+        grid-template-columns: 1fr;
+
+        .mobile-sidebar {
+            width: 100px;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2)
+        }
+    }
+
+    .product-card {
+        flex: 0 0 100%
+    }
+}
+    </style>
+</head>
+<body class="dark-theme">
+
+    <div class="header-container">
+        <header id="header2">
+            <!-- Ліва частина -->
+            <div class="headertext" id="headertext1">
+                <div class="logocontainer" id="logo">
+                    <!-- Залишив ваш placeholder, краще використовувати SVG або data URL -->
+                    <img id="logoday" data-theme-aware="logo" src="photo_5312278550180203579_y.png">
+                </div>
+                <div class="title">
+                    <h1>POP! Shop</h1>
+                </div>
+            </div>
+
+            <!-- Центр: Навігація -->
+            <nav class="nav-center" id="desktop-nav">
+                <a href="index.html" class="nav-link">Головна</a>
+                <a href="catalog.html" class="nav-link">Каталог</a>
+                <a href="cart.html" class="nav-link">Кошик</a>
+            </nav>
+
+            <!-- Права частина -->
+            <div class="header-right" id="desktop-controls">
+
+                <!-- Пошук -->
+                <form class="form" id="search-form">
+                    <label for="search">
+                        <input required="" autocomplete="off" placeholder="Пошук..." id="search" type="text">
+                        <!-- Іконка лупи, яка тепер діє як кнопка -->
+                        <div class="icon" role="button" id="search-button" aria-label="Пошук">
+                            <svg stroke-width="2" stroke="currentColor" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg" class="swap-on">
+                                <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linejoin="round"
+                                    stroke-linecap="round"></path>
+                            </svg>
+                            <svg class="swap-off"></svg>
+                        </div>
+                        <!-- Кнопка закриття (хрестик) -->
+                        <button type="reset" class="close-btn" aria-label="Очистити пошук">
+                            <svg viewBox="0 0 20 20" class="h-5 w-5" xmlns="http://www.w3.org/2000/svg">
+                                <path clip-rule="evenodd"
+                                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                    fill-rule="evenodd"></path>
+                            </svg>
+                        </button>
+                    </label>
+                </form>
+
+                <!-- Перемикач теми (з SVG) -->
+                <label class="switch">
+                    <input id="theme-switch" type="checkbox" />
+                    <div class="slider round">
+                        <div class="sun-moon">
+                            <!-- Місячні плями -->
+                            <svg id="moon-dot-1" class="moon-dot" viewBox="0 0 5 5">
+                                <circle cx="2.5" cy="2.5" r="2.5"></circle>
+                            </svg>
+                            <svg id="moon-dot-2" class="moon-dot" viewBox="0 0 5 5">
+                                <circle cx="2.5" cy="2.5" r="2.5"></circle>
+                            </svg>
+                            <svg id="moon-dot-3" class="moon-dot" viewBox="0 0 5 5">
+                                <circle cx="2.5" cy="2.5" r="2.5"></circle>
+                            </svg>
+                            <!-- Промені (Сонце) -->
+                            <svg id="light-ray-sun" class="light-ray" viewBox="0 0 26 26">
+                                <path
+                                    d="M13,0 L14.5,4 L19,2.5 L17.5,7 L22,8.5 L18,10.5 L20,15 L14.5,14 L13,18.5 L11.5,14 L7,15 L9,10.5 L5,8.5 L9.5,7 L8,2.5 L12.5,4 Z"
+                                    fill="yellow" />
+                            </svg>
+                            <!-- Хмари -->
+                            <svg id="cloud-1" class="cloud-light" viewBox="0 0 15 15">
+                                <circle cx="4" cy="10" r="4"></circle>
+                                <circle cx="10" cy="10" r="4"></circle>
+                                <circle cx="7" cy="6" r="5"></circle>
+                            </svg>
+                            <svg id="cloud-2" class="cloud-light" viewBox="0 0 15 15">
+                                <circle cx="4" cy="10" r="4"></circle>
+                                <circle cx="10" cy="10" r="4"></circle>
+                                <circle cx="7" cy="6" r="5"></circle>
+                            </svg>
+                        </div>
+                        <!-- Зірки -->
+                        <div class="stars">
+                            <svg id="star-1" class="star" viewBox="0 0 10 10">
+                                <polygon points="5,0 6.5,3.5 10,4 7,6.5 7.5,10 5,8 2.5,10 3,6.5 0,4 3.5,3.5" />
+                            </svg>
+                            <svg id="star-2" class="star" viewBox="0 0 10 10">
+                                <polygon points="5,0 6.5,3.5 10,4 7,6.5 7.5,10 5,8 2.5,10 3,6.5 0,4 3.5,3.5" />
+                            </svg>
+                            <svg id="star-3" class="star" viewBox="0 0 10 10">
+                                <polygon points="5,0 6.5,3.5 10,4 7,6.5 7.5,10 5,8 2.5,10 3,6.5 0,4 3.5,3.5" />
+                            </svg>
+                            <svg id="star-4" class="star" viewBox="0 0 10 10">
+                                <polygon points="5,0 6.5,3.5 10,4 7,6.5 7.5,10 5,8 2.5,10 3,6.5 0,4 3.5,3.5" />
+                            </svg>
+                        </div>
+                    </div>
+                </label>
+
+                <!-- Авторизація -->
+                <a href="register.html" class="nav-link" id="authorization-link">Авторизація</a>
+            </div>
+
+            <!-- Гамбургер -->
+            <button class="menu-toggle" id="menu-btn" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </header>
+    </div>
+    <!-- СЛАЙД МЕНЮ -->
+    <div class="mobile-sidebar" id="mobile-sidebar">
+        <!-- JS скопіює сюди елементи -->
+    </div>
+
+    <main class="max-w-7xl mx-auto px-6 py-10">
+        
+        <div class="flex flex-col md:flex-row justify-between items-end mb-10 gap-6">
+            <h2 class="text-4xl font-black uppercase">Каталог</h2>
+
+            <!-- Кнопки фильтров -->
+            <div class="filter-container flex flex-wrap gap-2">
+                <button onclick="filterProducts('all')" data-cat="all" class="filter-btn active">Всі</button>
+                <button onclick="filterProducts('disney')" data-cat="disney" class="filter-btn">Disney</button>
+                <button onclick="filterProducts('marvel')" data-cat="marvel" class="filter-btn">Marvel</button>
+                <button onclick="filterProducts('dc')" data-cat="dc" class="filter-btn">DC Comics</button>
+            </div>
+        </div>
+
+        <!-- СЕТКА КАРТОЧЕК -->
+           <div class="product-grid">            
+        <div class="product-card" data-category="marvel">
+                <div class="card-header" id="cardheader">
+                    <div class="title-and-franchise">
+                        <h3 class="product-title">Black Panther</h3>
+                        <div class="product-franchise">
+                            <img src="Marvel_Logo.svg.png">
+                        </div>
+                    </div>
+                    <h4>T'Challa | Funko POP! 1418</h4>
+                </div>
+                <div class="card-image-container">
+                    <img src="588077361.webp" alt="Фігурка Людини-павука Funko POP!" class="product-image">
+                </div>
+                <div class="card-caption p-4">
+                    <p class="product-description">Фігурка Чорної Пантери у класичному стилі. Висота: 10 см. Матеріал:Вініл.</p>
+                </div>
+                <div class="card-actions">
+                    <div class="price-and-cart">
+                        <button class="price-button py-2 px-4 rounded-lg">
+                            <span class="price-text"> Купити | $20.03</span>
+                        </button>
+                        <button class="cart-button p-3 rounded-lg" aria-label="Додати в кошик">
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                                <line x1="3" y1="6" x2="21" y2="6"></line>
+                                <path d="M16 10a4 4 0 0 1-8 0"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card" data-category="disney">
+                <div class="card-header" id="cardheader">
+                    <div class="title-and-franchise">
+                        <h3 class="product-title">Captain America</h3>
+                        <div class="product-franchise">
+                            <img src="Marvel_Logo.svg.png">
+                        </div>
+                    </div>
+                    <h4>Steve Rogers | Funko POP! 1419</h4>
+                </div>
+                <div class="card-image-container">
+                    <img src="515073030.webp" alt="Фігурка Людини-павука Funko POP!" class="product-image">
+                </div>
+                <div class="card-caption p-4">
+                    <p class="product-description">Фігурка Капітана Америки у класичному стилі. Висота: 10 см. Матеріал:Вініл.</p>
+                </div>
+                <div class="card-actions">
+                    <div class="price-and-cart">
+                        <button class="price-button py-2 px-4 rounded-lg">
+                            <span class="price-text"> Купити | $20.03</span>
+                        </button>
+                        <button class="cart-button p-3 rounded-lg" aria-label="Додати в кошик">
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                                <line x1="3" y1="6" x2="21" y2="6"></line>
+                                <path d="M16 10a4 4 0 0 1-8 0"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card" data-category="dc">
+                <div class="card-header" id="cardheader">
+                    <div class="title-and-franchise">
+                        <h3 class="product-title">Hulk</h3>
+                        <div class="product-franchise">
+                            <img src="Marvel_Logo.svg.png">
+                        </div>
+                    </div>
+                    <h4>Bruce Banner | Funko POP! 1420</h4>
+                </div>
+                <div class="card-image-container">
+                    <img src="501372890.webp" alt="Фігурка Людини-павука Funko POP!" class="product-image">
+                </div>
+                <div class="card-caption p-4">
+                    <p class="product-description">Фігурка Халка у класичному стилі. Висота: 10 см. Матеріал: Вініл.</p>
+                </div>
+                <div class="card-actions">
+                    <div class="price-and-cart">
+                        <button class="price-button py-2 px-4 rounded-lg">
+                            <span class="price-text"> Купити | $20.03</span>
+                        </button>
+                        <button class="cart-button p-3 rounded-lg" aria-label="Додати в кошик">
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                                <line x1="3" y1="6" x2="21" y2="6"></line>
+                                <path d="M16 10a4 4 0 0 1-8 0"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card" data-category="dc">
+                <div class="card-header" id="cardheader">
+                    <div class="title-and-franchise">
+                        <h3 class="product-title">Ironman</h3>
+                        <div class="product-franchise">
+                            <img src="Marvel_Logo.svg.png">
+                        </div>
+                    </div>
+                    <h4>Tony Stark | Funko POP! 1421</h4>
+                </div>
+                <div class="card-image-container">
+                    <img src="824996.webp" alt="Фігурка Людини-павука Funko POP!" class="product-image">
+                </div>
+                <div class="card-caption p-4">
+                    <p class="product-description">Фігурка Залізної людини у класичному стилі. Висота: 10 см. Матеріал:Вініл.</p>
+                </div>
+                <div class="card-actions">
+                    <div class="price-and-cart">
+                        <button class="price-button py-2 px-4 rounded-lg">
+                            <span class="price-text"> Купити | $20.03</span>
+                        </button>
+                        <button class="cart-button p-3 rounded-lg" aria-label="Додати в кошик">
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                                <line x1="3" y1="6" x2="21" y2="6"></line>
+                                <path d="M16 10a4 4 0 0 1-8 0"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card" data-category="marvel">
+                <div class="card-header" id="cardheader">
+                    <div class="title-and-franchise">
+                        <h3 class="product-title">Spider-man</h3>
+                        <div class="product-franchise">
+                            <img src="Marvel_Logo.svg.png">
+                        </div>
+                    </div>
+                    <h4>Peter Parker | Funko POP! 1422</h4>
+                </div>
+                <div class="card-image-container">
+                    <img src="501374361.webp" alt="Фігурка Людини-павука Funko POP!" class="product-image">
+                </div>
+                <div class="card-caption p-4">
+                    <p class="product-description">Фігурка Людини-павука у класичному стилі. Висота: 10 см. Матеріал:Вініл.</p>
+                </div>
+                <div class="card-actions">
+                    <div class="price-and-cart">
+                        <button class="price-button py-2 px-4 rounded-lg">
+                            <span class="price-text">Купити | $20.03</span>
+                        </button>
+                        <button class="cart-button p-3 rounded-lg" aria-label="Додати в кошик">
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                                <line x1="3" y1="6" x2="21" y2="6"></line>
+                                <path d="M16 10a4 4 0 0 1-8 0"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let cartCount = 0;
+
+        // Логика фильтров
+        function filterProducts(category) {
+            const cards = document.querySelectorAll('.product-card');
+            const buttons = document.querySelectorAll('.filter-btn');
+
+            cards.forEach(card => {
+                const cardCat = card.getAttribute('data-category');
+                
+                if (category === 'all' || cardCat === category) {
+                    card.classList.remove('hidden-card');
+                    card.style.animation = 'none';
+                    card.offsetHeight; 
+                    card.style.animation = 'fadeIn 0.4s ease forwards';
+                } else {
+                    card.classList.add('hidden-card');
+                }
+            });
+
+            buttons.forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('data-cat') === category);
+            });
+        }
+
+        // Логика темы
+        function toggleTheme() {
+            const body = document.body;
+            body.classList.toggle('dark-theme');
+            body.classList.toggle('light-theme');
+            
+            // Если есть логотип с id="logoday", он будет меняться
+            const logo = document.getElementById('logoday');
+            if (logo) {
+                logo.src = body.classList.contains('dark-theme') 
+                    ? 'photo_5357473601977782586_y.png' 
+                    : 'photo_5312278550180203579_y.png';
+            }
+        }
+
+        // Логика корзины (вешай на свои кнопки Купить onclick="addToCart()")
+        function addToCart() {
+            cartCount++;
+            const counter = document.getElementById('cart-counter');
+            if (counter) counter.innerText = cartCount;
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+    // Елементи меню (Sidebar)
+    const menuBtn = document.getElementById('menu-btn');
+    const sidebar = document.getElementById('mobile-sidebar');
+    const navCenter = document.getElementById('desktop-nav');
+    const headerRight = document.getElementById('desktop-controls'); // Права частина хедера
+    
+    // Елементи теми
+    const body = document.body;
+    const desktopThemeSwitch = document.getElementById('theme-switch');
+    const favicon = document.getElementById('favicon');
+
+
+    // Шляхи до логотипів (та інших елементів, що змінюють атрибути)
+    const logoLightSrc = 'photo_5312278550180203579_y.png'; // Світлий логотип (для light-theme)
+    const logoDarkSrc = 'photo_5357473601977782586_y.png'; // Темний логотип (для dark-theme)
+
+    // Disney logos (swap depending on theme)
+    const disneyBlackSrc = 'disneyblack.png';
+    const disneyWhiteSrc = 'disneywhite.png';
+    // Stitch-specific Disney logos
+    const disneyStitchLightSrc = 'Disney_Stitch_logo.png';
+    const disneyStitchDarkSrc = 'Disney_Stitch_logo (1).png';
+
+    // ======================================================================
+    // НОВИЙ ПУНКТ (ДОДАНО): КОНФІГУРАЦІЯ ЕЛЕМЕНТІВ, ЧУТЛИВИХ ДО ТЕМИ
+    // 
+    // Щоб додати новий елемент, чутливий до теми:
+    // 1. Додайте атрибут data-theme-aware="[ваше-ім'я]" до елемента в HTML.
+    // 2. Додайте конфігурацію в об'єкт themeAwareElements нижче.
+    //
+    // Приклад:
+    // <img id="logoday" data-theme-aware="logo" src="...">
+    // 
+    // Конфігурація:
+    // logo: {
+    //   light: (el) => { el.src = logoLightSrc; }, 
+    //   dark: (el) => { el.src = logoDarkSrc; }
+    // }
+    // ======================================================================
+
+    const themeAwareElements = {
+        // Конфігурація для елементу з data-theme-aware="logo" (наприклад, #logoday)
+        logo: {
+            // Дія при застосуванні світлої теми
+            light: (el) => { 
+                el.src = logoLightSrc; 
+            },
+            // Дія при застосуванні темної теми
+            dark: (el) => { 
+                el.src = logoDarkSrc; 
+            }
+        },
+        // Конфігурація для Disney логотипу в продукті
+        disney: {
+            light: (el) => { el.src = disneyBlackSrc; },
+            dark: (el) => { el.src = disneyWhiteSrc; }
+        },
+        // Конфігурація для Stitch logo swap
+        'disney-stitch': {
+            light: (el) => { el.src = disneyStitchLightSrc; },
+            dark: (el) => { el.src = disneyStitchDarkSrc; }
+        },
+        // ПРИКЛАД для будь-якого іншого елемента, який змінює клас/атрибут
+        // newElement: {
+        //     light: (el) => { el.classList.remove('shadow-dark'); el.classList.add('shadow-light'); },
+        //     dark: (el) => { el.classList.remove('shadow-light'); el.classList.add('shadow-dark'); }
+        // }
+    };
+    // 1. КЛОНУВАННЯ КОНТЕНТУ ДЛЯ САЙДБАРУ (Логіка слайд-меню)
+    
+    // Перевірка існування елементів перед клонуванням
+    if (navCenter && headerRight && sidebar) {
+        // Клонування навігації
+        const navClones = navCenter.cloneNode(true);
+        navClones.classList.remove('nav-center');
+        navClones.style.display = 'flex';
+        navClones.style.flexDirection = 'column';
+        navClones.style.gap = '20px';
+        sidebar.appendChild(navClones);
+
+        // Клонування елементів керування (включно з перемикачем теми)
+        const controlsClone = headerRight.cloneNode(true);
+        controlsClone.classList.remove('header-right');
+        controlsClone.style.display = 'flex';
+        controlsClone.style.flexDirection = 'column';
+        controlsClone.style.gap = '20px';
+        controlsClone.style.alignItems = 'flex-start';
+        sidebar.appendChild(controlsClone);
+
+        // Отримуємо мобільний світчер після клонування
+        const mobileThemeSwitch = controlsClone.querySelector('#theme-switch');
+        
+        // 2. ФУНКЦІЯ ЗАСТОСУВАННЯ ТЕМИ (МОДИФІКОВАНО)
+        const applyTheme = (isDark) => {
+            const theme = isDark ? 'dark' : 'light';
+            const oppositeTheme = isDark ? 'light' : 'dark';
+
+            // 2.1. Основні класи на <body>
+            body.classList.remove(`${oppositeTheme}-theme`);
+            body.classList.add(`${theme}-theme`);
+            if (favicon) {
+            favicon.href = isDark ? logoDarkSrc : logoLightSrc;
+            }
+            
+            // 2.2. Оновлення стану перемикачів
+            if (desktopThemeSwitch) desktopThemeSwitch.checked = isDark;
+            if (mobileThemeSwitch) mobileThemeSwitch.checked = isDark;
+
+            // 2.3. ДИНАМІЧНА ОБРОБКА ЕЛЕМЕНТІВ, ЧУТЛИВИХ ДО ТЕМИ
+            // Знаходимо всі елементи з атрибутом data-theme-aware
+            const themeElements = document.querySelectorAll('[data-theme-aware]');
+            
+            themeElements.forEach(el => {
+                const configKey = el.getAttribute('data-theme-aware'); // Отримуємо ключ конфігурації
+                const config = themeAwareElements[configKey]; // Отримуємо об'єкт конфігурації
+                
+                if (config) {
+                    // Викликаємо відповідну функцію для поточної теми
+                    if (isDark && typeof config.dark === 'function') {
+                        config.dark(el);
+                    } else if (!isDark && typeof config.light === 'function') {
+                        config.light(el);
+                    }
+                }
+            });
+
+            // 2.4. Збереження теми
+            localStorage.setItem('theme', theme);
+        };
+
+        // 3. ІНІЦІАЛІЗАЦІЯ ТЕМИ (Завантаження) (МОДИФІКОВАНО)
+        let storedTheme = localStorage.getItem('theme');
+        // Якщо тема ще не збережена, використовуємо клас на <body> (наприклад index.html може мати статичний dark-theme)
+        if (!storedTheme) {
+            const bodyIsDark = body.classList.contains('dark-theme');
+            storedTheme = bodyIsDark ? 'dark' : 'light';
+            localStorage.setItem('theme', storedTheme);
+        }
+        let isDark = storedTheme === 'dark';
+
+        // Встановлюємо початкові класи та стан перемикачів
+        applyTheme(isDark);
+
+
+        // 4. ОБРОБНИК ЗМІНИ ТЕМИ: викликається при зміні будь-якого перемикача (НЕЗМІННО)
+        const handleSwitchChange = (e) => {
+            // Оскільки applyTheme оновлює обидва світчера, достатньо викликати його один раз
+            applyTheme(e.target.checked);
+        }
+
+        // 5. НАЛАШТУВАННЯ СЛУХАЧІВ ДЛЯ ТЕМИ (НЕЗМІННО)
+        if (desktopThemeSwitch) {
+            desktopThemeSwitch.addEventListener('change', handleSwitchChange);
+        }
+        if (mobileThemeSwitch) {
+            // Оскільки це клонований елемент, ми додаємо слухача до нього
+            mobileThemeSwitch.addEventListener('change', handleSwitchChange);
+        }
+
+        // 6. ЛОГІКА САЙДБАРУ (НЕЗМІННО)
+        if (menuBtn && sidebar) {
+            menuBtn.addEventListener('click', (e) => {
+                e.stopPropagation(); 
+                sidebar.classList.toggle('active');
+                menuBtn.classList.toggle('active');
+            });
+        }
+
+        // Закриття бічної панелі при кліку поза нею
+        document.addEventListener('click', (e) => {
+            const isClickInsideSidebar = sidebar && sidebar.contains(e.target);
+            const isClickOnMenuButton = menuBtn && menuBtn.contains(e.target);
+            
+            if (sidebar && menuBtn && sidebar.classList.contains('active') && !isClickInsideSidebar && !isClickOnMenuButton) {
+                sidebar.classList.remove('active');
+                menuBtn.classList.remove('active');
+            }
+        });
+
+        // При переході на сторінки авторизації, зберігаємо поточну тему — це гарантує, що
+        // якщо головна сторінка використовує статичний клас (наприклад body.dark-theme),
+        // сторінки login/register отримають правильну стилізацію.
+        document.querySelectorAll('a[href$="login.html"], a[href$="register.html"], a#authorization-link').forEach(link => {
+            link.addEventListener('click', () => {
+                const curTheme = document.body.classList.contains('dark-theme') ? 'dark' : 'light';
+                localStorage.setItem('theme', curTheme);
+            });
+        });
+    } else {
+        // Якщо елементи слайд-меню відсутні, ініціалізуємо тільки тему (мінімальна версія)
+        
+        // 2. ФУНКЦІЯ ЗАСТОСУВАННЯ ТЕМИ (МОДИФІКОВАНО для мінімальної версії)
+        const applyThemeSimple = (isDark) => {
+            const theme = isDark ? 'dark' : 'light';
+            const oppositeTheme = isDark ? 'light' : 'dark';
+            
+            body.classList.remove(`${oppositeTheme}-theme`);
+            body.classList.add(`${theme}-theme`);
+            if (favicon) {
+            favicon.href = isDark ? logoDarkSrc : logoLightSrc;
+            }
+            
+            // 2.3. ДИНАМІЧНА ОБРОБКА ЕЛЕМЕНТІВ
+            const themeElements = document.querySelectorAll('[data-theme-aware]');
+            
+            themeElements.forEach(el => {
+                const configKey = el.getAttribute('data-theme-aware');
+                const config = themeAwareElements[configKey];
+                
+                if (config) {
+                    if (isDark && typeof config.dark === 'function') {
+                        config.dark(el);
+                    } else if (!isDark && typeof config.light === 'function') {
+                        config.light(el);
+                    }
+                }
+            });
+            
+            if (desktopThemeSwitch) desktopThemeSwitch.checked = isDark;
+            localStorage.setItem('theme', theme);
+        };
+
+        // 3. ІНІЦІАЛІЗАЦІЯ ТЕМИ (МОДИФІКОВАНО для мінімальної версії)
+        let storedTheme = localStorage.getItem('theme');
+        if (!storedTheme) {
+            const bodyIsDark = body.classList.contains('dark-theme');
+            storedTheme = bodyIsDark ? 'dark' : 'light';
+            localStorage.setItem('theme', storedTheme);
+        }
+        let isDark = storedTheme === 'dark';
+        applyThemeSimple(isDark);
+
+        // 4. + 5. НАЛАШТУВАННЯ СЛУХАЧА (МОДИФІКОВАНО для мінімальної версії)
+        if (desktopThemeSwitch) {
+            desktopThemeSwitch.addEventListener('change', (e) => applyThemeSimple(e.target.checked));
+        }
+    }
+});
+
+const track = document.getElementById('carouselTrack');
+const btnNext = document.querySelector('.carousel-btn.next');
+const btnPrev = document.querySelector('.carousel-btn.prev');
+
+let position = 0;
+let cardWidth = 0;
+let originalCount = 0;
+let autoScroll;
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Выбираем все возможные контейнеры для прокрутки
+    const scrollContainers = document.querySelectorAll('.products, .carousel-container, .products-container, .carousel-track');
+
+    scrollContainers.forEach(slider => {
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+        let isDragging = false;
+        
+        // Переменные для инерции
+        let velocity = 0;
+        let lastX = 0;
+        let lastTime = 0;
+        let animationId = null;
+
+        // Базовые настройки стиля для свободной прокрутки
+        slider.style.cursor = 'grab';
+        slider.style.userSelect = 'none'; 
+        slider.style.webkitUserSelect = 'none';
+        slider.style.overflowX = 'auto';
+        
+        // Полностью отключаем привязку к слайдам для "свободного" эффекта
+        slider.style.scrollSnapType = 'none';
+        slider.style.scrollBehavior = 'auto';
+
+        // Отключаем стандартное перетаскивание ссылок и картинок
+        const preventDefaultDrag = (e) => e.preventDefault();
+        slider.querySelectorAll('img, a').forEach(el => {
+            el.addEventListener('dragstart', preventDefaultDrag);
+        });
+
+        // Функция инерции (Momentum Scrolling)
+        const beginMomentum = () => {
+            if (Math.abs(velocity) < 0.2) return; // Порог остановки
+            
+            slider.scrollLeft -= velocity;
+            velocity *= 0.95; // Коэффициент замедления (0.95 = долгий выкат)
+            animationId = requestAnimationFrame(beginMomentum);
+        };
+
+        slider.addEventListener('mousedown', (e) => {
+            isDown = true;
+            isDragging = false;
+            slider.style.cursor = 'grabbing';
+            
+            // Останавливаем текущую анимацию инерции при клике
+            cancelAnimationFrame(animationId);
+
+            startX = e.pageX - slider.offsetLeft;
+            scrollLeft = slider.scrollLeft;
+            
+            lastX = e.pageX;
+            lastTime = Date.now();
+            velocity = 0;
+        });
+
+        slider.addEventListener('mouseleave', () => {
+            if (!isDown) return;
+            isDown = false;
+            slider.style.cursor = 'grab';
+            beginMomentum();
+        });
+
+        slider.addEventListener('mouseup', () => {
+            isDown = false;
+            slider.style.cursor = 'grab';
+            
+            if (isDragging) {
+                // Блокируем клик, если было движение
+                const preventClick = (event) => {
+                    event.stopImmediatePropagation();
+                    event.preventDefault();
+                    slider.removeEventListener('click', preventClick, true);
+                };
+                slider.addEventListener('click', preventClick, true);
+                beginMomentum();
+            }
+        });
+
+        slider.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            
+            const x = e.pageX - slider.offsetLeft;
+            const walk = (x - startX); 
+            
+            // Если сдвиг заметный, активируем режим перетаскивания
+            if (Math.abs(walk) > 3) {
+                isDragging = true;
+                e.preventDefault();
+                slider.scrollLeft = scrollLeft - walk;
+                
+                // Расчет мгновенной скорости для инерции
+                const currentTime = Date.now();
+                const timeElapsed = currentTime - lastTime;
+                if (timeElapsed > 0) {
+                    const distance = e.pageX - lastX;
+                    velocity = distance / (timeElapsed / 16); 
+                    lastX = e.pageX;
+                    lastTime = currentTime;
+                }
+            }
+        });
+    });
+});
+    </script>
+</body>
+</html>

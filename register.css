@@ -1,0 +1,138 @@
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(145deg, #667eea, #764ba2);
+}
+
+body.dark-theme {
+  background: linear-gradient(145deg, #ff4757, #ff6b7a);
+}
+
+.login {
+  width: 480px;
+  background-color: #ffffff;
+  border:  1px solid #dddddd;
+  border-radius: 15px;
+  margin: 0 auto; /* center horizontally */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.hader {
+  text-align: center;
+  font-size: 22px;
+  font-weight: 700;
+
+}
+.hader p {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 400;
+  color: #706b6b;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 15px;
+  margin-top: 20px;
+}
+form input {
+  height: 40px;
+  outline: none;
+  border: 1px solid #cccccc;
+  padding: 10px;
+  font-size: 15px;
+  border-radius: 8px;
+}
+
+
+/* Dark-theme overrides for auth pages */
+body.dark-theme .login {
+  background-color: #121212;
+  border-color: #3d3d3d;
+  color: #e6eef8;
+  box-shadow: 0 6px 30px rgba(0,0,0,0.6);
+}
+body.dark-theme .hader { color: #f3f4f6; }
+body.dark-theme .hader span { color: #f3f4f6; }
+body.dark-theme form input {
+  background: #1e1e1e;
+  color: #e5e7eb;
+  border: 1px solid #3d3d3d;
+}
+
+button {
+    font-size: 1.1rem;
+    font-weight: bold;
+    width: 100%;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s;
+    border-radius: 5px;
+    padding: 8px 16px;
+    /* Додав padding для коректного відображення */
+    /* Світла тема (Default) */
+    background: linear-gradient(145deg, #667eea, #764ba2);
+    /* Градиент */
+    color: #ffffff;
+    box-shadow: 0 4px 15px #667eea;
+}
+
+button:hover {
+    /* Світла тема (Default) */
+    box-shadow: 0 6px 20px #667eea;
+    transform: translateY(-1px);
+}
+
+/* Темна тема для кнопки ціни */
+body.dark-theme button {
+    background: linear-gradient(145deg, #ff4757, #ff6b7a);
+    /* Градиент */
+    box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4);
+}
+
+body.dark-theme button:hover {
+    box-shadow: 0 6px 20px rgba(255, 71, 87, 0.6);
+}
+
+form span {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    font-size: 16px;
+    padding-top: 10px;
+    color: #706b6b;
+}
+
+a {
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 18px;
+    padding: 5px 10px;
+    transition: all 0.3s ease;
+    /* Світла тема (Default) */
+    color: #667eea;
+    text-shadow: none;
+}
+
+a:hover {
+    /* Світла тема (Default) */
+    color: #764ba2;
+    transform: scale(1.05);
+}
+
+/* Посилання (Темна тема) */
+body.dark-theme a {
+    color: #ff4757;
+    text-shadow: 0 0 6px #ff4757, 0 0 20px #ff4757, 0 0 30px #ff4757;
+}
+
+body.dark-theme a:hover {
+    color: #ff6b7a;
+    text-shadow: 0 0 6px #ff6b7a, 0 0 20px #ff6b7a, 0 0 30px #ff6b7a;
+}

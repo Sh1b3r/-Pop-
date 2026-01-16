@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pop! login</title>
+    <link rel="stylesheet" href="login.css">
+    <link rel="icon" href="photo_5312278550180203579_y.png" type="image/x-icon" id="favicon">
+</head>
+<body>
+<div class="login">
+  <div class="hader">
+    <span>Увійдіть у свій аккаунт</span>
+  </div>
+  <form action="#">
+    <input type="email" placeholder="Введіть email" required="" />
+    <input type="password" placeholder="Введіть пароль" required="" />
+    <button type="button" id="registerBtn">Увійти</button>
+    <span>Не маєте аккаунта? <a href="register.html">Зареєструватися</a></span>
+  </form>
+</div>
+</body>
+<script src="Pop!.js"></script>
+<script>
+  (function() {
+    const form = document.querySelector('form');
+    const btn = document.getElementById('registerBtn');
+    btn.addEventListener('click', function() {
+      if (form.checkValidity()) {
+        window.location.href = 'index.html';
+      } else {
+        form.reportValidity();
+      }
+    });
+  })();
+</script>
+</html>

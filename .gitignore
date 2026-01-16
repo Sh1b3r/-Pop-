@@ -1,0 +1,29 @@
+# Тимчасові файли
+*.tmp
+*.temp
+*.log
+
+# Системні файли
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Резервні копії редакторів
+*~
+*.swp
+*.swo
+*.bak
+
+# Node modules (якщо використовуєте)
+node_modules/
+package-lock.json
+
+# IDE та редактори
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Файли збірки
+dist/
+build/

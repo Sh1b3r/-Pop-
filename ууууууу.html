@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pop! Shop - Акції</title>
+    
+    <style>
+        :root {
+            --accent: #ff7a00;
+            --bg-light: #f7f7f7;
+            --bg-dark: #121212;
+            --card-light: rgba(255, 255, 255, 0.8);
+            --card-dark: rgba(30, 30, 30, 0.6);
+            --text-light: #1a1a1a;
+            --text-dark: #e0e0e0;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        body.light-theme { background: var(--bg-light); color: var(--text-light); }
+        body.dark-theme { background: var(--bg-dark); color: var(--text-dark); }
+
+        /* --- КАРУСЕЛЬ (PROMO) --- */
+        .promo-section {
+            padding: 60px 5%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .promo-carousel {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .promo-track {
+            display: flex;
+            gap: 20px;
+            will-change: transform;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .promo-slide {
+            flex: 0 0 100%;
+            min-width: 100%;
+            height: 350px;
+            padding: 40px;
+            box-sizing: border-box;
+            border-radius: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.1);
+            
+            /* Початковий стан (неактивні) */
+            opacity: 0.4;
+            transform: scale(0.95);
+            transition: all 0.4s ease;
+        }
+
+        /* Стилі для темної/світлої теми */
+        body.light-theme .promo-slide { background: var(--card-light); box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        body.dark-theme .promo-slide { background: var(--card-dark); box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
+
+        .promo-slide.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        body.dark-theme .promo-slide.active {
+            box-shadow: 0 0 50px rgba(255, 122, 0, 0.2);
+            border-color: var(--accent);
+        }
+
+        .promo-slide h2 { font-size: 2.5rem; margin: 0 0 10px 0; color: var(--accent); }
+        .promo-slide p { font-size: 1.2rem; margin: 0; opacity: 0.9; max-width: 500px; }
+
+        .promo-timer {
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0,0,0,0.1);
+            padding: 8px 15px;
+            border-radius: 10px;
+        }
+
+        .promo-btn {
+            margin-top: 25px;
+            padding: 15px 35px;
+            width: fit-content;
+            border-radius: 15px;
+            border: none;
+            background: var(--accent);
+            color: #fff;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .promo-btn:hover { transform: scale(1.05); }
+
+        /* Стрілки */
+        .promo-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--accent);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .promo-arrow.left { left: 10px; }
+        .promo-arrow.right { right: 10px; }
+
+        @media (max-width: 768px) {
+            .promo-slide h2 { font-size: 1.8rem; }
+            .promo-arrow { width: 40px; height: 40px; }
+            .promo-arrow.left { left: 5px; }
+            .promo-arrow.right { right: 5px; }
+        }
+    </style>
+</head>
+<body class="dark-theme"> <!-- Можна змінити на light-theme -->
+
+    <section class="promo-section">
+        <div class="promo-carousel" id="promoCarousel" role="region" aria-label="Промоакції" tabindex="0">
+            <div class="promo-track" id="promoTrack">
+                <div class="promo-slide" data-id="1" role="group" aria-label="🔥 акція до -30%">
+                    <h2>🔥 акція до -30%</h2>
+                    <p>На всі фігурки Marvel до 31-ого грудня!</p>
+                    <div class="promo-timer" data-expire="2025-12-31T23:59:59Z" role="status" aria-live="polite">⏱ Завантаження...</div>
+                    <button class="promo-btn" aria-label="Дізнатися більше: акція до -30%">Дізнатися більше</button>
+                </div>
+                <div class="promo-slide" data-id="2" role="group" aria-label="🚚 Безкоштовна доставка">
+                    <h2>🚚 Безкоштовна доставка</h2>
+                    <p>При замовленні від 1500 грн на будь-який товар.</p>
+                    <button class="promo-btn" aria-label="Дізнатися більше: Безкоштовна доставка">Дізнатися більше</button>
+                </div>
+                <div class="promo-slide" data-id="3" role="group" aria-label="⭐ Новинки Stranger Things">
+                    <h2>⭐ Новинки Stranger Things</h2>
+                    <p>Свіжі надходження по 5-ому сезону вже на складі.</p>
+                    <button class="promo-btn" aria-label="Дізнатися більше: Новинки Stranger Things">Дізнатися більше</button>
+                </div>
+            </div>
+            <button class="promo-arrow left" id="promoPrev" aria-label="Попередня акція">‹</button>
+            <button class="promo-arrow right" id="promoNext" aria-label="Наступна акція">›</button>
+        </div>
+    </section>
+
+    <script>
+        (function() {
+            // 1. ДАНІ АКЦІЙ (тепер можна виносити в HTML через <script id="promoData" type="application/json">)
+            const PromoData = {
+                get() {
+                    // 1) Якщо в HTML присутній JSON у <script id="promoData"> — беремо його
+                    const htmlDataEl = document.getElementById('promoData');
+                    if (htmlDataEl) {
+                        try {
+                            const parsed = JSON.parse(htmlDataEl.textContent);
+                            if (Array.isArray(parsed)) {
+                                // Нормалізуємо expires (ISO строки -> timestamp)
+                                return parsed.map(item => {
+                                    const copy = Object.assign({}, item);
+                                    if (copy.expires) {
+                                        if (typeof copy.expires === 'string' && !/^\d+$/.test(copy.expires)) {
+                                            const parsedDate = Date.parse(copy.expires);
+                                            if (!isNaN(parsedDate)) copy.expires = parsedDate;
+                                            else delete copy.expires;
+                                        } else if (typeof copy.expires === 'string') {
+                                            copy.expires = parseInt(copy.expires, 10);
+                                        }
+                                    }
+                                    return copy;
+                                });
+                            }
+                        } catch (e) {
+                            console.warn('Invalid JSON in #promoData', e);
+                        }
+                    }
+
+                    const saved = localStorage.getItem('active_promos');
+                    if (saved) return JSON.parse(saved);
+                    
+                    // Дефолтні акції (якщо порожньо)
+                    return [
+                        { id: 1, title: '🔥 Знижка -30%', text: 'На всі фігурки Marvel тільки сьогодні!', expires: Date.now() + 3600000 },
+                        { id: 2, title: '🚚 Безкоштовна доставка', text: 'При замовленні від 1500 грн на будь-який товар.' },
+                        { id: 3, title: '⭐ Новинки Anime', text: 'Свіжі надходження з Японії вже на складі.' }
+                    ];
+                },
+                save(data) {
+                    localStorage.setItem('active_promos', JSON.stringify(data));
+                }
+            };
+
+            let data = PromoData.get();
+            let currentIndex = 1; // Починаємо з 1, бо 0 - це клон останнього слайда
+            let isJumping = false;
+            
+            const track = document.getElementById('promoTrack');
+            const carousel = document.getElementById('promoCarousel');
+
+            // 2. СТВОРЕННЯ СЛАЙДІВ
+            function buildCarousel() {
+                if (data.length === 0) {
+                    track.innerHTML = '<div class="promo-slide active"><h2>Акцій поки немає</h2></div>';
+                    return;
+                }
+
+                // Для нескінченного ефекту: [Клон останнього, ...Всі акції, Клон першого]
+                const list = [data[data.length - 1], ...data, data[0]];
+                
+                track.innerHTML = list.map((item, idx) => `
+                    <div class="promo-slide">
+                        <h2>${item.title}</h2>
+                        <p>${item.text}</p>
+                        ${item.expires ? `<div class="promo-timer" data-expire="${item.expires}">⏱ Завантаження...</div>` : ''}
+                        <button class="promo-btn">Дізнатися більше</button>
+                    </div>
+                `).join('');
+
+                updatePosition(false);
+                updateActiveState();
+            }
+
+            // 3. УПРАВЛІННЯ ПОЗИЦІЄЮ
+            function updatePosition(animate = true) {
+                const slideWidth = track.children[0].offsetWidth + 20; // ширина + gap
+                track.style.transition = animate ? 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)' : 'none';
+                track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+            }
+
+            function updateActiveState() {
+                const slides = Array.from(track.children);
+                slides.forEach(s => s.classList.remove('active'));
+                if (slides[currentIndex]) slides[currentIndex].classList.add('active');
+            }
+
+            // 4. НАВІГАЦІЯ
+            const moveNext = () => {
+                if (isJumping) return;
+                currentIndex++;
+                updatePosition();
+                updateActiveState();
+            };
+
+            const movePrev = () => {
+                if (isJumping) return;
+                currentIndex--;
+                updatePosition();
+                updateActiveState();
+            };
+
+            // Перевірка на "стрибок" для нескінченності
+            track.addEventListener('transitionend', () => {
+                const totalSlides = track.children.length;
+                
+                if (currentIndex === totalSlides - 1) {
+                    isJumping = true;
+                    currentIndex = 1;
+                    updatePosition(false);
+                    setTimeout(() => isJumping = false, 50);
+                }
+                
+                if (currentIndex === 0) {
+                    isJumping = true;
+                    currentIndex = totalSlides - 2;
+                    updatePosition(false);
+                    setTimeout(() => isJumping = false, 50);
+                }
+                updateActiveState();
+            });
+
+            document.getElementById('promoNext').onclick = moveNext;
+            document.getElementById('promoPrev').onclick = movePrev;
+
+            // Keyboard nav for promo carousel when focused
+            if (carousel) {
+                carousel.addEventListener('keydown', (e) => {
+                    if (e.key === 'ArrowRight') { document.getElementById('promoNext').click(); e.preventDefault(); }
+                    if (e.key === 'ArrowLeft') { document.getElementById('promoPrev').click(); e.preventDefault(); }
+                });
+            }
+
+            // 5. АВТОПЛЕЙ
+            let autoInterval = setInterval(moveNext, 6000);
+            carousel.onmouseenter = () => clearInterval(autoInterval);
+            carousel.onmouseleave = () => autoInterval = setInterval(moveNext, 6000);
+
+            // 6. ТАЙМЕРИ
+            setInterval(() => {
+                const timers = document.querySelectorAll('[data-expire]');
+                timers.forEach(timer => {
+                    const expireAttr = timer.dataset.expire;
+                    let expireTime = NaN;
+                    if (expireAttr) {
+                        if (/^\d+$/.test(expireAttr)) {
+                            expireTime = parseInt(expireAttr, 10);
+                        } else {
+                            const parsed = Date.parse(expireAttr);
+                            expireTime = isNaN(parsed) ? NaN : parsed;
+                        }
+                    }
+                    if (isNaN(expireTime)) return;
+
+                    const diff = expireTime - Date.now();
+
+                    if (diff <= 0) {
+                        // Видаляємо акцію, якщо час вийшов
+                        data = data.filter(item => item.expires !== expireTime);
+                        PromoData.save(data);
+                        buildCarousel();
+                    } else {
+                        const d = Math.floor(diff / 86400000); // days
+                        const h = Math.floor((diff % 86400000) / 3600000); // hours
+                        if (d >= 1) {
+                            timer.textContent = `⏱ Залишилось: ${d}д ${h}г`;
+                        } else {
+                            const totalHours = Math.floor(diff / 3600000);
+                            const minutes = Math.floor((diff % 3600000) / 60000);
+                            timer.textContent = `⏱ Залишилось: ${totalHours}г ${minutes}хв`;
+                        }
+                    }
+                });
+            }, 1000);
+
+            // 7. СВАЙПИ (для телефонів)
+            let touchStartX = 0;
+            carousel.addEventListener('touchstart', e => touchStartX = e.touches[0].clientX);
+            carousel.addEventListener('touchend', e => {
+                const diff = e.changedTouches[0].clientX - touchStartX;
+                if (Math.abs(diff) > 50) diff < 0 ? moveNext() : movePrev();
+            });
+
+            // Старт
+            window.onload = buildCarousel;
+            window.onresize = () => updatePosition(false);
+        })();
+    </script>
+</body>
+</html>
