@@ -5,13 +5,11 @@ import { Layers } from 'lucide-react';
 
 interface CatalogViewProps {
   products: Product[];
-  onOpen3D: (p: Product) => void;
   searchQuery?: string;
 }
 
 export const CatalogView: React.FC<CatalogViewProps> = ({
   products,
-  onOpen3D,
   searchQuery = ''
 }) => {
   const [activeCategory, setActiveCategory] = useState<'all' | 'marvel' | 'disney'>('all');
@@ -76,7 +74,7 @@ export const CatalogView: React.FC<CatalogViewProps> = ({
       {/* Grid of Cards */}
       <div className="product-grid">
         {filteredProducts.map((p) => (
-          <ProductCard key={p.id} product={p} onOpen3D={onOpen3D} />
+          <ProductCard key={p.id} product={p} />
         ))}
       </div>
 

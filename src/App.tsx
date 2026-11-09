@@ -10,11 +10,10 @@ import { ProductCard } from './components/ProductCard';
 import { DragScrollContainer } from './components/DragScrollContainer';
 import { CatalogView } from './components/CatalogView';
 import { CartView } from './components/CartView';
-import { Product3DModal } from './components/Product3DModal';
 import { AuthModal } from './components/auth/AuthModal';
 import { CheckoutModal } from './components/checkout/CheckoutModal';
 import { AdminDashboard } from './components/admin/AdminDashboard';
-import { ShieldCheck, Truck, RotateCw, Send } from 'lucide-react';
+import { ShieldCheck, Truck, Award, Send } from 'lucide-react';
 
 export function App() {
   const { products } = usePricing();
@@ -23,7 +22,6 @@ export function App() {
 
   const [currentView, setCurrentView] = useState('home'); // 'home' | 'catalog' | 'cart' | 'admin'
   const [searchQuery, setSearchQuery] = useState('');
-  const [modalProduct, setModalProduct] = useState<Product | null>(null);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
 
   const marvelProducts = products.filter((p) => p.category === 'marvel');
@@ -47,7 +45,6 @@ export function App() {
         ) : currentView === 'catalog' ? (
           <CatalogView
             products={products}
-            onOpen3D={(p) => setModalProduct(p)}
             searchQuery={searchQuery}
           />
         ) : currentView === 'cart' ? (
@@ -121,7 +118,6 @@ export function App() {
                   <ProductCard
                     key={prod.id}
                     product={prod}
-                    onOpen3D={(p) => setModalProduct(p)}
                   />
                 ))}
               </DragScrollContainer>
@@ -144,7 +140,6 @@ export function App() {
                   <ProductCard
                     key={prod.id}
                     product={prod}
-                    onOpen3D={(p) => setModalProduct(p)}
                   />
                 ))}
               </DragScrollContainer>
@@ -179,11 +174,11 @@ export function App() {
           </div>
           <div className="product-card glass-card p-4 flex flex-row items-center gap-3.5 w-auto">
             <div className="p-2.5 rounded-xl bg-[#FF6B00]/15 border border-[#FF6B00]/30 text-[#FF6B00]">
-              <RotateCw className="w-6 h-6" />
+              <Award className="w-6 h-6" />
             </div>
             <div>
-              <h4 className="font-bold text-sm">3D Showroom</h4>
-              <p className="text-xs opacity-70">Інтерактивний огляд кожної фігурки на 360°</p>
+              <h4 className="font-bold text-sm">Гарантія якості</h4>
+              <p className="text-xs opacity-70">Перевірка кожного екземпляра перед відправкою</p>
             </div>
           </div>
           <a
@@ -237,14 +232,6 @@ export function App() {
         <span className="hidden sm:inline">Замовити в Telegram</span>
         <span className="text-[10px] bg-white/20 px-1.5 py-0.5 rounded-full font-mono">@popshop_orders_ua_bot</span>
       </a>
-
-      {/* 3D Model Inspection Modal */}
-      {modalProduct && (
-        <Product3DModal
-          product={modalProduct}
-          onClose={() => setModalProduct(null)}
-        />
-      )}
 
       {/* Auth Modal */}
       <AuthModal

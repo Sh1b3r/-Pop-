@@ -121,8 +121,7 @@ body.light-theme .carousel-section {
 
 /* Hover effect on glass surfaces */
 .product-card:hover,
-.carousel-section:hover,
-.glass-card:hover {
+.carousel-section:hover {
   transform: translateY(-6px) !important;
   border-color: rgba(255, 107, 0, 0.65) !important;
   box-shadow: 
@@ -803,6 +802,15 @@ body.light-theme .cart-button {
 .cart-button svg {
   width: 20px;
   height: 20px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* Tabular Numerics */

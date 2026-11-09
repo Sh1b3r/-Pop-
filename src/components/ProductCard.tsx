@@ -3,14 +3,13 @@ import { Product } from '../types';
 import { useCart } from '../context/CartContext';
 import { usePricing } from '../context/PricingContext';
 import { sounds } from '../three/audioEffects';
-import { Box, ShoppingBag, Check } from 'lucide-react';
+import { ShoppingBag, Check } from 'lucide-react';
 
 interface ProductCardProps {
   product: Product;
-  onOpen3D: (p: Product) => void;
 }
 
-export const ProductCard: React.FC<ProductCardProps> = ({ product, onOpen3D }) => {
+export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const { addToCart } = useCart();
   const { getProductPrice, formatPrice, currency } = usePricing();
   const [isAdded, setIsAdded] = useState(false);
@@ -45,12 +44,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onOpen3D }) =
         <h4>{product.subtitle}</h4>
       </div>
 
-      {/* 2. Figure Image Container with 3D Preview Badge */}
-      <div
-        className="card-image-container"
-        onClick={() => onOpen3D(product)}
-        title="Натисніть для 3D огляду на 360°"
-      >
+      {/* 2. Figure Image Container */}
+      <div className="card-image-container">
         <img
           src={product.image}
           alt={product.title}
@@ -58,10 +53,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onOpen3D }) =
           draggable={false}
           loading="lazy"
         />
-        <div className="badge-3d select-none">
-          <Box className="w-3 h-3 text-[#FF6B00]" />
-          <span>3D Огляд</span>
-        </div>
       </div>
 
       {/* 3. Description Caption */}

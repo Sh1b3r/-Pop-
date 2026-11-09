@@ -33,7 +33,7 @@ export const RegionCurrencySelector: React.FC = () => {
         type="button"
         onClick={() => setIsOpen(!isOpen)}
         aria-label="Вибір регіону та валюти"
-        className={`flex items-center gap-2 px-3 py-1.5 rounded-xl cursor-pointer transition-all duration-200 border ${
+        className={`flex items-center gap-2 px-3 py-2 rounded-xl cursor-pointer transition-all duration-200 border ${
           isOpen
             ? 'border-[#FF6B00] shadow-[0_0_15px_rgba(255,107,0,0.4)]'
             : 'border-black/15 dark:border-white/20 hover:border-[#FF6B00]'
@@ -44,10 +44,11 @@ export const RegionCurrencySelector: React.FC = () => {
           WebkitBackdropFilter: 'blur(12px)',
         }}
       >
-        <span className="text-base select-none leading-none">{currentOption.flag}</span>
-        <div className="flex items-center gap-1 font-mono text-xs font-bold tabular-numbers">
-          <span>{currentOption.currencyName}</span>
-          <span className="text-[#FF6B00]">({currentOption.symbol})</span>
+        <div className="flex items-center gap-1.5 text-xs font-bold leading-none">
+          <span className="font-extrabold text-white tracking-wide">{currentOption.region}</span>
+          <span className="text-white/40 font-normal">·</span>
+          <span className="text-white tracking-wide">{currentOption.currencyName}</span>
+          <span className="text-[#FF6B00] font-bold">({currentOption.symbol})</span>
         </div>
         <ChevronDown
           className={`w-3.5 h-3.5 text-[#FF6B00] transition-transform duration-200 ${
@@ -59,7 +60,7 @@ export const RegionCurrencySelector: React.FC = () => {
       {/* Glassmorphic Dropdown Panel */}
       {isOpen && (
         <div
-          className="absolute right-0 mt-2 w-52 py-2 z-50 rounded-2xl shadow-2xl border border-black/10 dark:border-white/20 animate-fadeIn"
+          className="absolute right-0 mt-2 w-56 py-2 z-50 rounded-2xl shadow-2xl border border-black/10 dark:border-white/20 animate-fadeIn"
           style={{
             background: 'var(--dropdown-bg, rgba(20, 26, 38, 0.95))',
             backdropFilter: 'blur(20px)',
@@ -88,18 +89,22 @@ export const RegionCurrencySelector: React.FC = () => {
                   className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer text-left ${
                     isSelected
                       ? 'bg-[#FF6B00] text-white shadow-md shadow-[#FF6B00]/40'
-                      : 'hover:bg-black/5 dark:hover:bg-white/10'
+                      : 'hover:bg-black/5 dark:hover:bg-white/10 text-white'
                   }`}
                 >
-                  <div className="flex items-center gap-2.5">
-                    <span className="text-lg">{opt.flag}</span>
-                    <span className="font-medium">{opt.label}</span>
+                  <div className="flex items-center gap-2">
+                    <span className={`px-1.5 py-0.5 rounded text-[10px] font-mono font-bold leading-none ${
+                      isSelected ? 'bg-black/20 text-[#171717]' : 'bg-white/10 text-[#FF6B00]'
+                    }`}>
+                      {opt.region}
+                    </span>
+                    <span className="font-medium text-xs leading-none">{opt.label}</span>
                   </div>
-                  <div className="flex items-center gap-1.5 font-mono tabular-numbers text-[11px]">
-                    <span className={isSelected ? 'text-white' : 'text-[#FF6B00] font-bold'}>
+                  <div className="flex items-center gap-1.5 font-mono tabular-numbers text-[11px] leading-none">
+                    <span className={isSelected ? 'text-[#171717] font-extrabold' : 'text-[#FF6B00] font-bold'}>
                       {opt.currencyName} ({opt.symbol})
                     </span>
-                    {isSelected && <Check className="w-3.5 h-3.5 text-white" />}
+                    {isSelected && <Check className="w-3.5 h-3.5 text-[#171717]" />}
                   </div>
                 </button>
               );
