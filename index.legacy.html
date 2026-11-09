@@ -1,0 +1,588 @@
+﻿<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pop!</title>
+    <link rel="stylesheet" href="pop.style.css">
+    <link rel="icon" href="photo_5312278550180203579_y.png" type="image/x-icon" id="favicon">
+</head>
+
+<body class="dark-theme">
+
+    <div class="header-container">
+        <header id="header2">
+            <!-- Ліва частина -->
+            <div class="headertext" id="headertext1">
+                <div class="logocontainer" id="logo">
+                    <!-- Залишив ваш placeholder, краще використовувати SVG або data URL -->
+                    <img id="logoday" data-theme-aware="logo" src="photo_5312278550180203579_y.png">
+                </div>
+                <div class="title">
+                    <h1>POP! Shop</h1>
+                </div>
+            </div>
+
+            <!-- Центр: Навігація -->
+            <nav class="nav-center" id="desktop-nav">
+                <a href="index.html" class="nav-link">Головна</a>
+                <a href="catalog.html" class="nav-link">Каталог</a>
+                <a href="cart.html" class="nav-link">Кошик</a>
+            </nav>
+
+            <!-- Права частина -->
+            <div class="header-right" id="desktop-controls">
+
+                <!-- Пошук -->
+                <form class="form" id="search-form">
+                    <label for="search">
+                        <input required="" autocomplete="off" placeholder="Пошук..." id="search" type="text">
+                        <!-- Іконка лупи, яка тепер діє як кнопка -->
+                        <div class="icon" role="button" id="search-button" aria-label="Пошук">
+                            <svg stroke-width="2" stroke="currentColor" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg" class="swap-on">
+                                <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linejoin="round"
+                                    stroke-linecap="round"></path>
+                            </svg>
+                            <svg class="swap-off"></svg>
+                        </div>
+                        <!-- Кнопка закриття (хрестик) -->
+                        <button type="reset" class="close-btn" aria-label="Очистити пошук">
+                            <svg viewBox="0 0 20 20" class="h-5 w-5" xmlns="http://www.w3.org/2000/svg">
+                                <path clip-rule="evenodd"
+                                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                    fill-rule="evenodd"></path>
+                            </svg>
+                        </button>
+                    </label>
+                </form>
+
+                <!-- Перемикач теми (з SVG) -->
+                <label class="switch">
+                    <input id="theme-switch" type="checkbox" />
+                    <div class="slider round">
+                        <div class="sun-moon">
+                            <!-- Місячні плями -->
+                            <svg id="moon-dot-1" class="moon-dot" viewBox="0 0 5 5">
+                                <circle cx="2.5" cy="2.5" r="2.5"></circle>
+                            </svg>
+                            <svg id="moon-dot-2" class="moon-dot" viewBox="0 0 5 5">
+                                <circle cx="2.5" cy="2.5" r="2.5"></circle>
+                            </svg>
+                            <svg id="moon-dot-3" class="moon-dot" viewBox="0 0 5 5">
+                                <circle cx="2.5" cy="2.5" r="2.5"></circle>
+                            </svg>
+                            <!-- Промені (Сонце) -->
+                            <svg id="light-ray-sun" class="light-ray" viewBox="0 0 26 26">
+                                <path
+                                    d="M13,0 L14.5,4 L19,2.5 L17.5,7 L22,8.5 L18,10.5 L20,15 L14.5,14 L13,18.5 L11.5,14 L7,15 L9,10.5 L5,8.5 L9.5,7 L8,2.5 L12.5,4 Z"
+                                    fill="yellow" />
+                            </svg>
+                            <!-- Хмари -->
+                            <svg id="cloud-1" class="cloud-light" viewBox="0 0 15 15">
+                                <circle cx="4" cy="10" r="4"></circle>
+                                <circle cx="10" cy="10" r="4"></circle>
+                                <circle cx="7" cy="6" r="5"></circle>
+                            </svg>
+                            <svg id="cloud-2" class="cloud-light" viewBox="0 0 15 15">
+                                <circle cx="4" cy="10" r="4"></circle>
+                                <circle cx="10" cy="10" r="4"></circle>
+                                <circle cx="7" cy="6" r="5"></circle>
+                            </svg>
+                        </div>
+                        <!-- Зірки -->
+                        <div class="stars">
+                            <svg id="star-1" class="star" viewBox="0 0 10 10">
+                                <polygon points="5,0 6.5,3.5 10,4 7,6.5 7.5,10 5,8 2.5,10 3,6.5 0,4 3.5,3.5" />
+                            </svg>
+                            <svg id="star-2" class="star" viewBox="0 0 10 10">
+                                <polygon points="5,0 6.5,3.5 10,4 7,6.5 7.5,10 5,8 2.5,10 3,6.5 0,4 3.5,3.5" />
+                            </svg>
+                            <svg id="star-3" class="star" viewBox="0 0 10 10">
+                                <polygon points="5,0 6.5,3.5 10,4 7,6.5 7.5,10 5,8 2.5,10 3,6.5 0,4 3.5,3.5" />
+                            </svg>
+                            <svg id="star-4" class="star" viewBox="0 0 10 10">
+                                <polygon points="5,0 6.5,3.5 10,4 7,6.5 7.5,10 5,8 2.5,10 3,6.5 0,4 3.5,3.5" />
+                            </svg>
+                        </div>
+                    </div>
+                </label>
+
+                <!-- Авторизація -->
+                <a href="register.html" class="nav-link" id="authorization-link">Авторизація</a>
+            </div>
+
+            <!-- Гамбургер -->
+            <button class="menu-toggle" id="menu-btn" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </header>
+    </div>
+    <!-- СЛАЙД МЕНЮ -->
+    <div class="mobile-sidebar" id="mobile-sidebar">
+        <!-- JS скопіює сюди елементи -->
+    </div>
+    <main>
+        <div class="carousel-container">
+            <!-- Секція 1 -->
+            <div class="carousel-section">
+                <h2>Новорічний розпродаж до 80% на всі товари</h2>
+                <div class="carousel-image-wrapper">
+                    <img src="christmas.png" alt="Christmas Sale"
+                        onerror="this.src='https://via.placeholder.com/400x400?text=Christmas+Sale'">
+                </div>
+            </div>
+
+            <!-- Секція 2 -->
+            <div class="carousel-section">
+                <h2>Акції на новинки по п'ятому сезону Stranger Things</h2>
+                <div class="carousel-image-wrapper">
+                    <img src="stranger things.png" alt="Stranger Things"
+                        onerror="this.src='https://via.placeholder.com/400x400?text=Stranger+Things'">
+                </div>
+            </div>
+
+            <!-- Секція 3 -->
+            <div class="carousel-section">
+                <h2>Безкоштовна доставка при замовленні від 6000грн</h2>
+                <div class="carousel-image-wrapper">
+                    <img src="freddy.png" alt="Free Delivery"
+                        onerror="this.src='https://via.placeholder.com/400x400?text=Freddy+Delivery'">
+                </div>
+            </div>
+        </div>
+        <h2>Акції по фігуркам Marvel</h2>
+        <div class="products">
+            <div class="product-card">
+                <div class="card-header" id="cardheader">
+                    <div class="title-and-franchise">
+                        <h3 class="product-title">Black Panther</h3>
+                        <div class="product-franchise">
+                            <img src="Marvel_Logo.svg.png">
+                        </div>
+                    </div>
+                    <h4>T'Challa | Funko POP! 1418</h4>
+                </div>
+                <div class="card-image-container">
+                    <img src="588077361.webp" alt="Фігурка Людини-павука Funko POP!" class="product-image">
+                </div>
+                <div class="card-caption p-4">
+                    <p class="product-description">Фігурка Чорної Пантери у класичному стилі. Висота: 10 см. Матеріал:Вініл.</p>
+                </div>
+                <div class="card-actions">
+                    <div class="price-and-cart">
+                        <button class="price-button py-2 px-4 rounded-lg">
+                            <span class="price-text"> Купити | $20.03</span>
+                        </button>
+                        <button class="cart-button p-3 rounded-lg" aria-label="Додати в кошик">
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                                <line x1="3" y1="6" x2="21" y2="6"></line>
+                                <path d="M16 10a4 4 0 0 1-8 0"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="card-header" id="cardheader">
+                    <div class="title-and-franchise">
+                        <h3 class="product-title">Captain America</h3>
+                        <div class="product-franchise">
+                            <img src="Marvel_Logo.svg.png">
+                        </div>
+                    </div>
+                    <h4>Steve Rogers | Funko POP! 1419</h4>
+                </div>
+                <div class="card-image-container">
+                    <img src="515073030.webp" alt="Фігурка Людини-павука Funko POP!" class="product-image">
+                </div>
+                <div class="card-caption p-4">
+                    <p class="product-description">Фігурка Капітана Америки у класичному стилі. Висота: 10 см. Матеріал:Вініл.</p>
+                </div>
+                <div class="card-actions">
+                    <div class="price-and-cart">
+                        <button class="price-button py-2 px-4 rounded-lg">
+                            <span class="price-text"> Купити | $20.03</span>
+                        </button>
+                        <button class="cart-button p-3 rounded-lg" aria-label="Додати в кошик">
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                                <line x1="3" y1="6" x2="21" y2="6"></line>
+                                <path d="M16 10a4 4 0 0 1-8 0"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="card-header" id="cardheader">
+                    <div class="title-and-franchise">
+                        <h3 class="product-title">Hulk</h3>
+                        <div class="product-franchise">
+                            <img src="Marvel_Logo.svg.png">
+                        </div>
+                    </div>
+                    <h4>Bruce Banner | Funko POP! 1420</h4>
+                </div>
+                <div class="card-image-container">
+                    <img src="501372890.webp" alt="Фігурка Людини-павука Funko POP!" class="product-image">
+                </div>
+                <div class="card-caption p-4">
+                    <p class="product-description">Фігурка Халка у класичному стилі. Висота: 10 см. Матеріал: Вініл.</p>
+                </div>
+                <div class="card-actions">
+                    <div class="price-and-cart">
+                        <button class="price-button py-2 px-4 rounded-lg">
+                            <span class="price-text"> Купити | $20.03</span>
+                        </button>
+                        <button class="cart-button p-3 rounded-lg" aria-label="Додати в кошик">
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                                <line x1="3" y1="6" x2="21" y2="6"></line>
+                                <path d="M16 10a4 4 0 0 1-8 0"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="card-header" id="cardheader">
+                    <div class="title-and-franchise">
+                        <h3 class="product-title">Ironman</h3>
+                        <div class="product-franchise">
+                            <img src="Marvel_Logo.svg.png">
+                        </div>
+                    </div>
+                    <h4>Tony Stark | Funko POP! 1421</h4>
+                </div>
+                <div class="card-image-container">
+                    <img src="824996.webp" alt="Фігурка Людини-павука Funko POP!" class="product-image">
+                </div>
+                <div class="card-caption p-4">
+                    <p class="product-description">Фігурка Залізної людини у класичному стилі. Висота: 10 см. Матеріал:Вініл.</p>
+                </div>
+                <div class="card-actions">
+                    <div class="price-and-cart">
+                        <button class="price-button py-2 px-4 rounded-lg">
+                            <span class="price-text"> Купити | $20.03</span>
+                        </button>
+                        <button class="cart-button p-3 rounded-lg" aria-label="Додати в кошик">
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                                <line x1="3" y1="6" x2="21" y2="6"></line>
+                                <path d="M16 10a4 4 0 0 1-8 0"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="card-header" id="cardheader">
+                    <div class="title-and-franchise">
+                        <h3 class="product-title">Spider-man</h3>
+                        <div class="product-franchise">
+                            <img src="Marvel_Logo.svg.png">
+                        </div>
+                    </div>
+                    <h4>Peter Parker | Funko POP! 1422</h4>
+                </div>
+                <div class="card-image-container">
+                    <img src="501374361.webp" alt="Фігурка Людини-павука Funko POP!" class="product-image">
+                </div>
+                <div class="card-caption p-4">
+                    <p class="product-description">Фігурка Людини-павука у класичному стилі. Висота: 10 см. Матеріал:Вініл.</p>
+                </div>
+                <div class="card-actions">
+                    <div class="price-and-cart">
+                        <button class="price-button py-2 px-4 rounded-lg">
+                            <span class="price-text">Купити | $20.03</span>
+                        </button>
+                        <button class="cart-button p-3 rounded-lg" aria-label="Додати в кошик">
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                                <line x1="3" y1="6" x2="21" y2="6"></line>
+                                <path d="M16 10a4 4 0 0 1-8 0"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h2>Купуй двох і отримай третього у подарунок!</h2>
+        <h3>Збери свою колекцію!</h3>
+        <div class="products">
+            <div class="product-card">
+                <div class="card-header" id="cardheader">
+                    <div class="title-and-franchise">
+                        <h3 class="product-title">Stitch</h3>
+                        <div class="product-franchise">
+                            <img src="disneyblack.png" data-theme-aware="disney" alt="Disney logo">
+                        </div>
+                    </div>
+                    <h4>Funko POP! 159</h4>
+                </div>
+                <div class="card-image-container">
+                    <img src="17b2f60e981e7a4fb1fa55ff8722dcee.jpg.webp" alt="Фігурка Стіч Funko POP!"
+                        class="product-image">
+                </div>
+                <div class="card-caption p-4">
+                    <p class="product-description">Фігурка Стіча у класичному стилі. Висота: 10 см. Матеріал:Вініл.</p>
+                </div>
+                <div class="card-actions">
+                    <div class="price-and-cart">
+                        <button class="price-button py-2 px-4 rounded-lg">
+                            <span class="price-text"> Купити | $20.03</span>
+                        </button>
+                        <button class="cart-button p-3 rounded-lg" aria-label="Додати в кошик">
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                                <line x1="3" y1="6" x2="21" y2="6"></line>
+                                <path d="M16 10a4 4 0 0 1-8 0"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="card-header" id="cardheader">
+                    <div class="title-and-franchise">
+                        <h3 class="product-title">Stitch with ukulele</h3>
+                        <div class="product-franchise">
+                            <img src="Lilo and Stitch Logo.png">
+                        </div>
+                    </div>
+                    <h4>Funko POP! 1044</h4>
+                </div>
+                <div class="card-image-container">
+                    <img src="61J4X7JfPvL.jpg" alt="Фігурка Людини-павука Funko POP!" class="product-image">
+                </div>
+                <div class="card-caption p-4">
+                    <p class="product-description">Фігурка Стіча з укулеле у класичному стилі. Висота: 10 см. Матеріал:Вініл.</p>
+                </div>
+                <div class="card-actions">
+                    <div class="price-and-cart">
+                        <button class="price-button py-2 px-4 rounded-lg">
+                            <span class="price-text"> Купити | $20.03</span>
+                        </button>
+                        <button class="cart-button p-3 rounded-lg" aria-label="Додати в кошик">
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                                <line x1="3" y1="6" x2="21" y2="6"></line>
+                                <path d="M16 10a4 4 0 0 1-8 0"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="card-header" id="cardheader">
+                    <div class="title-and-franchise">
+                        <h3 class="product-title">Stitch</h3>
+                        <div class="product-franchise">
+                            <img src="Lilo and Stitch Logo.png">
+                        </div>
+                    </div>
+                    <h4>Funko POP! 1045</h4>
+                </div>
+                <div class="card-image-container">
+                    <img src="618lkYll7KL._AC_UF894,1000_QL80_.jpg" alt="Фігурка Стіча Funko POP!"
+                        class="product-image">
+                </div>
+                <div class="card-caption p-4">
+                    <p class="product-description">Фігурка веселого Стіча у класичному стилі. Висота: 10см. Матеріал:Вініл.</p>
+                </div>
+                <div class="card-actions">
+                    <div class="price-and-cart">
+                        <button class="price-button py-2 px-4 rounded-lg">
+                            <span class="price-text"> Купити | $20.03</span>
+                        </button>
+                        <button class="cart-button p-3 rounded-lg" aria-label="Додати в кошик">
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                                <line x1="3" y1="6" x2="21" y2="6"></line>
+                                <path d="M16 10a4 4 0 0 1-8 0"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="card-header" id="cardheader">
+                    <div class="title-and-franchise">
+                        <h3 class="product-title">Summer Stitch</h3>
+                        <div class="product-franchise">
+                            <img src="Lilo and Stitch Logo.png">
+                        </div>
+                    </div>
+                    <h4>Funko POP! 1414</h4>
+                </div>
+                <div class="card-image-container">
+                    <img src="Summer_Stitch_1414_Blacklight_Funko_Pop_-_Lilo_Stitch_-_Hot_Topic_Exclusive.webp" alt="Фігурка Людини-павука Funko POP!" class="product-image">
+                </div>
+                <div class="card-caption p-4">
+                    <p class="product-description">Фігурка Літнього в сучасному стилі. Висота: 10 см. Матеріал:Вініл.</p>
+                </div>
+                <div class="card-actions">
+                    <div class="price-and-cart">
+                        <button class="price-button py-2 px-4 rounded-lg">
+                            <span class="price-text">Купити | $20.03</span>
+                        </button>
+                        <button class="cart-button p-3 rounded-lg" aria-label="Додати в кошик">
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                                <line x1="3" y1="6" x2="21" y2="6"></line>
+                                <path d="M16 10a4 4 0 0 1-8 0"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="card-header" id="cardheader">
+                    <div class="title-and-franchise">
+                        <h3 class="product-title">Stitch as pongo</h3>
+                        <div class="product-franchise">
+                            <img src="Lilo and Stitch Logo.png">
+                        </div>
+                    </div>
+                    <h4>Funko POP! 1462</h4>
+                </div>
+                <div class="card-image-container">
+                    <img src="pop-figure-disney-stitch-as-pongo.jpg" alt="Фігурка Людини-павука Funko POP!"
+                        class="product-image">
+                </div>
+                <div class="card-caption p-4">
+                    <p class="product-description">Фігурка Стіча В образі Понго у класичному стилі. Висота: 10 см. Матеріал: Вініл.</p>
+                </div>
+                <div class="card-actions">
+                    <div class="price-and-cart">
+                        <button class="price-button py-2 px-4 rounded-lg">
+                            <span class="price-text">Купити | $20.03</span>
+                        </button>
+                        <button class="cart-button p-3 rounded-lg" aria-label="Додати в кошик">
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                                <line x1="3" y1="6" x2="21" y2="6"></line>
+                                <path d="M16 10a4 4 0 0 1-8 0"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="card-header" id="cardheader">
+                    <div class="title-and-franchise">
+                        <h3 class="product-title">Stitch with candy cane</h3>
+                        <div class="product-franchise">
+                            <img src="Lilo and Stitch Logo.png">
+                        </div>
+                    </div>
+                    <h4>Funko POP! 1502</h4>
+                </div>
+
+                <div class="card-image-container">
+                    <img src="x_fk80036_a.webp" alt="Фігурка Людини-павука Funko POP!" class="product-image">
+                </div>
+                <div class="card-caption p-4">
+                    <p class="product-description">Фігурка Новорічного Стітча із льодяником у класичному стилі. Висота: 10 см. Матеріал:Вініл.</p>
+                </div>
+                <div class="card-actions">
+                    <div class="price-and-cart">
+                        <button class="price-button py-2 px-4 rounded-lg">
+                            <span class="price-text"> Купити | $20.03</span>
+                        </button>
+                        <button class="cart-button p-3 rounded-lg" aria-label="Додати в кошик">
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                                <line x1="3" y1="6" x2="21" y2="6"></line>
+                                <path d="M16 10a4 4 0 0 1-8 0"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="card-header" id="cardheader">
+                    <div class="title-and-franchise">
+                        <h3 class="product-title">Stitch</h3>
+                        <div class="product-franchise">
+                            <img src="Disney_Stitch_logo.png" data-theme-aware="disney-stitch" alt="Disney Stitch logo">
+                        </div>
+                    </div>
+                    <h4>Funko POP! 1538</h4>
+                </div>
+                <div class="card-image-container">
+                    <img src="Stitch1538_2-800x800.jpg" alt="Фігурка Людини-павука Funko POP!" class="product-image">
+                </div>
+                <div class="card-caption p-4">
+                    <p class="product-description">Фігурка ексклюзивного чотирирукого Стітча у класичному стилі. Висота: 10 см. Матеріал:Вініл.</p>
+                </div>
+                <div class="card-actions">
+                    <div class="price-and-cart">
+                        <button class="price-button py-2 px-4 rounded-lg">
+                            <span class="price-text">Купити | $20.03</span>
+                        </button>
+                        <button class="cart-button p-3 rounded-lg" aria-label="Додати в кошик">
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                                <line x1="3" y1="6" x2="21" y2="6"></line>
+                                <path d="M16 10a4 4 0 0 1-8 0"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="card-header" id="cardheader">
+                    <div class="title-and-franchise">
+                        <h3 class="product-title">Luau Stitch</h3>
+                        <div class="product-franchise">
+                            <img src="Lilo and Stitch Logo.png">
+                        </div>
+                    </div>
+                    <h4>Funko POP! 1567</h4>
+                </div>
+                <div class="card-image-container">
+                    <img src="6763893618_w400_h400_figurka-fanko-pop.webp" alt="Фігурка Людини-павука Funko POP!"
+                        class="product-image">
+                </div>
+                <div class="card-caption p-4">
+                    <p class="product-description">Фігурка Луау Стіча у класичному стилі. Висота: 10 см. Матеріал:Вініл.
+                    </p>
+                </div>
+                <div class="card-actions">
+                    <div class="price-and-cart">
+                        <button class="price-button py-2 px-4 rounded-lg">
+                            <span class="price-text"> Купити | $20.03</span>
+                        </button>
+                        <button class="cart-button p-3 rounded-lg" aria-label="Додати в кошик">
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                                <line x1="3" y1="6" x2="21" y2="6"></line>
+                                <path d="M16 10a4 4 0 0 1-8 0"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="Pop!.js"></script>
+</body>
+
+</html>

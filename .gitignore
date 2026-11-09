@@ -27,3 +27,6 @@ package-lock.json
 # Файли збірки
 dist/
 build/
+.env
+bot/orders.jsonl
+.vercel
