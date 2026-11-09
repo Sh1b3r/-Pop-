@@ -156,31 +156,6 @@ export function App() {
       {/* Footer */}
       <footer className="mt-20 border-t border-black/10 dark:border-white/10 py-10 px-4">
         {/* Telegram Order CTA Banner */}
-        <div className="max-w-7xl mx-auto mb-8 p-6 glass-card product-card rounded-2xl flex flex-col md:flex-row items-center justify-between gap-6 border border-[#229ED9]/40 bg-gradient-to-r from-[#229ED9]/15 via-transparent to-[#FF6B00]/15 w-auto">
-          <div className="flex items-center gap-4 text-left">
-            <div className="w-14 h-14 rounded-2xl bg-[#229ED9] text-white flex items-center justify-center shadow-lg shadow-[#229ED9]/30 flex-shrink-0">
-              <Send className="w-7 h-7" />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h3 className="text-lg font-black tracking-tight">Замовляйте фігурки через Telegram Bot!</h3>
-                <span className="text-xs px-2 py-0.5 rounded-full bg-[#229ED9] text-white font-bold">24/7 Онлайн</span>
-              </div>
-              <p className="text-xs opacity-80 mt-1 max-w-xl">
-                Бажаєте швидке оформлення, консультацію або пошук рідкісної Funko POP! під замовлення? Переходьте прямо в нашого офіційного Telegram-бота!
-              </p>
-            </div>
-          </div>
-          <a
-            href="https://t.me/popshop_orders_ua_bot"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-accent whitespace-nowrap flex items-center gap-2 px-6 py-3 rounded-xl shadow-lg hover:shadow-[#FF6B00]/40 transition-all font-bold text-sm"
-          >
-            <Send className="w-4 h-4" />
-            <span>Замовити через @popshop_orders_ua_bot</span>
-          </a>
-        </div>
 
         {/* 4 Feature / Trust Cards */}
         <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">

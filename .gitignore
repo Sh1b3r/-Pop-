@@ -30,3 +30,4 @@ build/
 .env
 bot/orders.jsonl
 .vercel
+.vite/
