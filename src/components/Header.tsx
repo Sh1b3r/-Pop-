@@ -5,6 +5,7 @@ import { useTheme } from '../context/ThemeContext';
 import { RegionCurrencySelector } from './pricing/RegionCurrencySelector';
 import { ThemeToggle } from './ThemeToggle';
 import { Shield, LogOut, ShoppingBag, Search, Sparkles, Send } from 'lucide-react';
+import { getAssetUrl } from '../config/media';
 
 interface HeaderProps {
   currentView: string;
@@ -38,7 +39,7 @@ export const Header: React.FC<HeaderProps> = ({
           <div className="logocontainer" id="logo">
             <img
               id="logoday"
-              src="/pop-logo.png"
+              src={getAssetUrl('/pop-logo.png')}
               alt="POP! Shop Logo"
             />
           </div>

@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { SupportedRegion, SupportedCurrency, Product } from '../types';
 import { INITIAL_PRODUCTS } from '../data/mockStore';
+import { getAssetUrl } from '../config/media';
 
 interface PricingContextType {
   region: SupportedRegion;
@@ -28,9 +29,10 @@ export const PricingProvider: React.FC<{ children: React.ReactNode }> = ({ child
   const [products, setProducts] = useState<Product[]>(() => {
     try {
       const stored = localStorage.getItem('pop_products');
-      return stored ? JSON.parse(stored) : INITIAL_PRODUCTS;
+      const loaded: Product[] = stored ? JSON.parse(stored) : INITIAL_PRODUCTS;
+      return loaded.map(p => ({ ...p, image: getAssetUrl(p.image) }));
     } catch {
-      return INITIAL_PRODUCTS;
+      return INITIAL_PRODUCTS.map(p => ({ ...p, image: getAssetUrl(p.image) }));
     }
   });
 

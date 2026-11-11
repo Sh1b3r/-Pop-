@@ -4,6 +4,7 @@ import { useCart } from '../context/CartContext';
 import { usePricing } from '../context/PricingContext';
 import { sounds } from '../three/audioEffects';
 import { ShoppingBag, Check } from 'lucide-react';
+import { getAssetUrl } from '../config/media';
 
 interface ProductCardProps {
   product: Product;
@@ -34,10 +35,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           </h3>
           <div className="product-franchise">
             {product.category === 'marvel' && (
-              <img src="/Marvel_Logo.svg.png" alt="Marvel logo" draggable={false} />
+              <img src={getAssetUrl('/Marvel_Logo.svg.png')} alt="Marvel logo" draggable={false} />
             )}
             {product.category === 'disney' && (
-              <img src="/Disney_Stitch_logo.png" alt="Disney Stitch logo" draggable={false} />
+              <img src={getAssetUrl('/Disney_Stitch_logo.png')} alt="Disney Stitch logo" draggable={false} />
             )}
           </div>
         </div>

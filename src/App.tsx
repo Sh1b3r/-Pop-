@@ -14,6 +14,7 @@ import { AuthModal } from './components/auth/AuthModal';
 import { CheckoutModal } from './components/checkout/CheckoutModal';
 import { AdminDashboard } from './components/admin/AdminDashboard';
 import { ShieldCheck, Truck, Award, Send } from 'lucide-react';
+import { getAssetUrl } from './config/media';
 
 export function App() {
   const { products } = usePricing();
@@ -65,7 +66,7 @@ export function App() {
                 </h2>
                 <div className="carousel-image-wrapper">
                   <img
-                    src="/christmas.png"
+                    src={getAssetUrl('/christmas.png')}
                     alt="Новорічний розпродаж"
                     draggable={false}
                   />
@@ -79,7 +80,7 @@ export function App() {
                 </h2>
                 <div className="carousel-image-wrapper">
                   <img
-                    src="/freddy.png"
+                    src={getAssetUrl('/freddy.png')}
                     alt="Freddy FNAF"
                     draggable={false}
                   />
@@ -93,7 +94,7 @@ export function App() {
                 </h2>
                 <div className="carousel-image-wrapper">
                   <img
-                    src="/stranger things.png"
+                    src={getAssetUrl('/stranger things.png')}
                     alt="Stranger Things"
                     draggable={false}
                   />
@@ -107,7 +108,7 @@ export function App() {
                 <h2>Акції тижня</h2>
                 <div className="franchise" id="franchise1">
                   <img
-                    src="/Marvel_Logo.svg.png"
+                    src={getAssetUrl('/Marvel_Logo.svg.png')}
                     alt="Marvel"
                     draggable={false}
                   />
@@ -129,7 +130,7 @@ export function App() {
                 <h2>Купуй двох і отримай третього у подарунок!</h2>
                 <div className="franchise" id="franchise2">
                   <img
-                    src="/Disney_Stitch_logo.png"
+                    src={getAssetUrl('/Disney_Stitch_logo.png')}
                     alt="Disney Stitch"
                     draggable={false}
                   />
